@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: OTP Auth API
+  version: "1.0"
+paths:
+  /v1/otp/send:
+    post:
+      summary: Generate OTP for phone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+      responses:
+        '200':
+          description: OTP generated
+  /v1/otp/verify:
+    post:
+      summary: Verify OTP and get JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                otp:
+                  type: string
+      responses:
+        '200':
+          description: returns token and user
+  /v1/users:
+    get:
+      summary: List users
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: offset
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: list users
+  /v1/users/{id}:
+    get:
+      summary: Get user by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: returns user
